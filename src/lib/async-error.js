@@ -1,24 +1,12 @@
-// const config = configs[app.get("env") || "development"];
-// const log = config.log();
+require("express-async-errors");
 
-// module.exports = function (err, req, res, next) {
-//   log.error(err.message);
-//   res.status(err.status || 500).send(
-//     /^[4]\d{2}$/.test(err.status) //intentionally thrown error details
-//       ? err.details
-//       : {
-//           ok: false,
-//           msg: "Server temporarily unavailable, please try again later",
-//         }
-//   );
-// };
-
-module.exports = ({ log }) => {
+module.exports = ({ log: logger }) => {
+  const log = logger();
   return function (err, req, res, next) {
-    log.error(err.message);
-    res.status(err.status || 500).send(
-      /^[4]\d{2}$/.test(err.status) //intentionally thrown error details
-        ? err.details
+    log.error(err);
+    res.status(err.code || 500).send(
+      /^[4]\d{2}$/.test(err.code) //intentionally thrown error details
+        ? err
         : {
             ok: false,
             msg: "Server temporarily unavailable, please try again later",

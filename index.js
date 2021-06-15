@@ -10,7 +10,7 @@ require("./src/config/error")(config);
 require("./src/config/startup")(app, config);
 require("./src/config/db")(config);
 
-app.use("/", router());
+app.use("/", router(config));
 app.use(asyncError(config));
 
 app.listen(config.port, () =>

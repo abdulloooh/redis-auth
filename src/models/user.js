@@ -1,39 +1,49 @@
-// var mongoose = require("mongoose");
+const _ = require("lodash");
+const mongoose = require("mongoose");
+// const crypto = require("crypto");
 
-// const Schema = mongoose.Schema;
-// const UserSchema = Schema({
-//     googleId: { type: String, trim: true, required: true, unique: true },
-//     avatar: { type: String, required: false },
-//     name: { type: String, required: false },
-//     email: { type: String, trim: true, required: false, unique: true, sparse: true },
-//     password: { type: String, required: false },
-//     account_number: { type: String, required: false },
-//     bank_code: { type: String, required: false },
-//     bank_name: { type: String, required: false },
-//     account_name: { type: String, required: false },
-//     recipient_code: { type: String, required: false },
-//     contributions: [
-//         {
-//             amount: { type: Number, default: 0 },
-//             campaign: { type: mongoose.Schema.Types.ObjectId, ref: 'Campaign' },
-//             record: { type: mongoose.Schema.Types.ObjectId, ref: 'Record' },
-//             date: { type: Date, default: new Date() },
-//             total_before: { type: Number, default: 0 },
-//             total_after: { type: Number, default: 0 },
-//         }
-//     ]
+const public_fields = ["email", "restricted"];
 
-// }, { id: true });
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      index: true,
+      lowercase: true,
+      trim: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      trim: true,
+      unique: true,
+      index: true,
+      lowercase: true,
+      minlength: 5,
+      maxlength: 255,
+      required: "Please fill in an email",
+    },
+    password: {
+      type: String,
+      maxlength: 255,
+    },
+    restricted: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-// UserSchema.virtual('id').get(function () {
-//     return this._id.toHexString();
-// });
+userSchema.methods.transformUserEntity = function () {
+  return _.pick(this, public_fields);
+};
 
-// UserSchema.set('toJSON', {
-//     virtuals: true,
-//     versionKey: false,
-//     transform: function (doc, ret) { delete ret._id }
-// });
+// userSchema.methods.generatePasswordReset = function () {
+//   this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
+//   this.resetPasswordExpires = Date.now() + 900000; //expires in 15 minutes
+// };
 
-// const UserModel = mongoose.model("User", UserSchema);
-// module.exports = UserModel
+module.exports = mongoose.model("User", userSchema);

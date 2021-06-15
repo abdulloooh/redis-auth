@@ -10,7 +10,7 @@ module.exports = function (config) {
     }, 300);
   });
 
-  process.on("unhandledRejection", () => {
-    throw new Error();
+  process.on("unhandledRejection", (err) => {
+    throw new Error(err);
   });
 };
