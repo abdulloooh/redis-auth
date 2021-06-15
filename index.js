@@ -1,5 +1,3 @@
-const helmet = require("helmet");
-const compression = require("compression");
 const configs = require("./src/config");
 const router = require("./src/routes");
 const asyncError = require("./src/lib/async-error");
