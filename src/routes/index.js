@@ -12,7 +12,7 @@ module.exports = (config) => {
     return res.send(`<h3>Bonjour</h3>`);
   });
 
-  router.use("/users", usersRouter(userController));
+  router.use("/users", usersRouter(userController, config));
   router.use("/auth", authRouter(userController));
 
   return router;
