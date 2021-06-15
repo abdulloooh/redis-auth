@@ -1,5 +1,5 @@
-const configs = require("./src/config");
 const router = require("./src/routes");
+const configs = require("./src/config");
 const asyncError = require("./src/lib/async-error");
 
 const app = require("express")();
@@ -10,7 +10,7 @@ require("./src/config/error")(config);
 require("./src/config/startup")(app, config);
 require("./src/config/db")(config);
 
-app.use("/", router);
+app.use("/", router());
 app.use(asyncError(config));
 
 app.listen(config.port, () =>
