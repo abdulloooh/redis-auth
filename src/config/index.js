@@ -1,6 +1,6 @@
 const path = require("path");
 const bunyan = require("bunyan");
-require("dotenv").config()
+require("dotenv").config();
 
 const pjs = require("../../package.json");
 
@@ -14,8 +14,9 @@ const getLogger = (serviceName, serviceVersion, level) =>
 const common = {
   db: process.env.DB,
   port: process.env.PORT,
-  data: {}
-}
+  jwt: process.env.JWT,
+  data: {},
+};
 
 module.exports = {
   development: {

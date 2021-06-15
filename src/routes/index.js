@@ -1,33 +1,15 @@
-const express = require("express");
+const router = require("express").Router();
 
-const router = express.Router();
+const usersRoute = require("./usersRoute");
 
-const speakersRoute = require("./speakers");
-const feedbackRoute = require("./feedback");
+import Users from "../controllers/Users";
 
-module.exports = (param) => {
-  const { speakers } = param;
-
+module.exports = () => {
   router.get("/", async (req, res, next) => {
-    try {
-      const promises = [];
-      promises.push(speakers.getListShort());
-      promises.push(speakers.getAllArtwork());
-
-      const results = await Promise.all(promises);
-
-      return res.render("index", {
-        page: "Home",
-        speakerslist: results[0],
-        artwork: results[1],
-      });
-    } catch (err) {
-      return next(err);
-    }
+    return `<h3>Bonjour</h3>`;
   });
 
-  router.use("/speakers", speakersRoute(param));
-  router.use("/feedback", feedbackRoute(param));
+  router.use("/users", usersRoute(Users));
 
   return router;
 };

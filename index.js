@@ -6,13 +6,13 @@ const app = require("express")();
 const config = configs[app.get("env") || "development"];
 const log = config.log();
 
-log.debug(`ENVIRONMENT: ${app.get("env")}`);
-
 require("./src/config/error")(config);
 require("./src/config/startup")(app, config);
 require("./src/config/db")(config);
 
 app.use("/", router);
-app.use(asyncError);
+app.use(asyncError(config));
 
-app.listen(config.port, () => log.info("Server listening on port ", port));
+app.listen(config.port, () =>
+  log.info(`Server listening on port ${config.port} in ${app.get("env")}`)
+);

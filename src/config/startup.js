@@ -27,7 +27,7 @@ module.exports = function (app, config) {
   }
 
   if (!config.jwt) {
-    throw new Error("jwtPrivateToken key not found");
+    throw new Error("jwt key not found");
   }
   if (!config.db) {
     throw new Error("db not configured");
