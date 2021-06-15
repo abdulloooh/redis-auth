@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const usersRouter = require("./usersRoute");
+const authRouter = require("./authRoute");
 
 import Users from "../controllers/Users";
 
@@ -12,6 +13,7 @@ module.exports = (config) => {
   });
 
   router.use("/users", usersRouter(userController));
+  router.use("/auth", authRouter(userController));
 
   return router;
 };

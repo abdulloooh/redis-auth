@@ -10,6 +10,8 @@ require("./src/config/error")(config);
 require("./src/config/startup")(app, config);
 require("./src/config/db")(config);
 
+config.redisClient = require("./src/config/redis")(config);
+
 app.use("/", router(config));
 app.use(asyncError(config));
 
