@@ -15,5 +15,11 @@ module.exports = (userController, config) => {
     return res.send(response);
   });
 
+  // logout
+  router.post("/logoutall", auth(config), async (req, res) => {
+    const response = await userController.logoutAllInstances(req.user);
+    return res.send(response);
+  });
+
   return router;
 };

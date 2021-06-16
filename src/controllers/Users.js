@@ -79,6 +79,25 @@ export default class Users {
     });
   }
 
+  // get all keys assigned to an email and delete them, del the email holding the list too
+  async logoutAllInstances(user) {
+    return new Promise(async (resolve, reject) => {
+      this.redisClient.smembers(user.email, (err, instancesKeys) => {
+        if (err) return reject(this.userError("please try again"));
+        this.redisClient.del(instancesKeys, (err, resp) => {
+          if (err) return reject(this.userError("please try again"));
+          this.redisClient.del(user.email, (err, resp) => {
+            return resolve({
+              ok: true,
+              code: 200,
+              msg: "logout all sessions successfully",
+            });
+          });
+        });
+      });
+    });
+  }
+
   userError(msg = "Incorrect details") {
     return {
       code: 400,
