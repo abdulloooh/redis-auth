@@ -25,10 +25,11 @@ module.exports = function (app, config) {
     app.use(helmet());
     app.use(compression());
   }
-
+/*
   if (!config.jwt) {
     throw new Error("jwt key not found");
   }
+*/
   if (!config.db) {
     throw new Error("db not configured");
   }
