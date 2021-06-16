@@ -41,4 +41,4 @@ The simple approach I used was to keep track of all sessions in 2 ways:
 2. Delete all the keys
 3. Delete the set holding the keys
 
-> With ❤️ by [Abdullah][https://twitter.com/abdulloooh]
+> With ❤️ by [Abdullah](https://twitter.com/abdulloooh)
