@@ -14,7 +14,7 @@ const getLogger = (serviceName, serviceVersion, level) =>
 const common = {
   db: process.env.DB,
   port: process.env.PORT,
-  jwt: process.env.JWT,
+  //jwt: process.env.JWT,
   redisport: process.env.REDIS_PORT,
   redisauth: process.env.REDIS_AUTH,
   data: {},
