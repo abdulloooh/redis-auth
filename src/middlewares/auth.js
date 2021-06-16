@@ -14,6 +14,7 @@ module.exports = ({ redisClient, log: logger }) => {
     redisClient.get(token, (err, resp) => {
       if (err || !resp) return res.status(400).send({ ok: false, msg: "Please log in again" });
       req.user = JSON.parse(resp);
+      req.user.access_token = token;
       next();
     });
   };

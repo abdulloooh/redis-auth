@@ -13,7 +13,7 @@ module.exports = (config) => {
   });
 
   router.use("/users", usersRouter(userController, config));
-  router.use("/auth", authRouter(userController));
+  router.use("/auth", authRouter(userController, config));
 
   return router;
 };

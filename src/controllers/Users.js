@@ -44,17 +44,35 @@ export default class Users {
       if (!(await verify(userDb.password, user.password))) return reject(this.userError());
 
       const token = uuid();
-      const payload = JSON.stringify({ username: userDb.username, restricted: userDb.restricted });
 
-      this.redisClient.sadd(payload, token, (err, resp) => {
+      this.redisClient.sadd(userDb.email, token, (err, resp) => {
         if (err) return reject(this.userError("please try again"));
-        this.redisClient.set(token, payload, (err, resp) => {
-          if (err) return reject(this.userError("please try again"));
+        this.redisClient.set(
+          token,
+          JSON.stringify({ email: userDb.email, restricted: userDb.restricted }),
+          (err, resp) => {
+            if (err) return reject(this.userError("please try again"));
+            return resolve({
+              ok: true,
+              code: 200,
+              user: userDb.transformUserEntity(),
+              access_token: token,
+            });
+          }
+        );
+      });
+    });
+  }
+
+  async logout(user) {
+    return new Promise(async (resolve, reject) => {
+      this.redisClient.del(user.access_token, (err, resp) => {
+        if (err) return reject(this.userError("please try again"));
+        this.redisClient.srem(user.email, user.access_token, (err, resp) => {
           return resolve({
             ok: true,
             code: 200,
-            user: userDb.transformUserEntity(),
-            access_token: token,
+            msg: "logout successfully",
           });
         });
       });
