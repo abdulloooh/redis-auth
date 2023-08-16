@@ -1,7 +1,5 @@
 # Authentication with Redis
 
-This is a sequel to my delving into redis which is found [here](https://github.com/abdulloooh/redis-pr).
-
 This light project demonstrates the use of `redis` as full auth technique, it uses `uuid v4` to assign random session string as opposed to using `jwt`, keeps track of all sessions by single user from 1/multiple device(s) as well as multiple users.
 
 ## Technologies
